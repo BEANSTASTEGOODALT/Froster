@@ -1,0 +1,17 @@
+{
+  "manifest_version": 3,
+  "name": "Froster",
+  "version": "1.6",
+  "description": "A cheat for the DrFrost website, with tools like show answer, complete task, skip question (still counting as correct), and more.",
+  "permissions": [],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://www.drfrost.org/*"
+      ],
+      "js": ["content.js"],
+      "run_at": "document_start",
+      "world": "MAIN"
+    }
+  ]
+}
