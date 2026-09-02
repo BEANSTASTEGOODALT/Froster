@@ -430,10 +430,9 @@ function buildGui() {
     controls.append(row, labelAnswer, answer);
 
     const logWrap = el('div', { className: 'frost-log-wrap' });
-    const labelLog = el('div', { className: 'frost-label', text: 'Made by Hudson' });
     const log = el('pre', { id: UI_IDS.log, className: 'frost-log' });
     const btnClear = el('button', { id: UI_IDS.btnClear, className: 'frost-btn frost-btn-secondary', text: 'Clear Log'});
-    logWrap.append(labelLog, log, btnClear);
+    logWrap.append(log, btnClear);
 
     content.append(title, controls, logWrap);
     root.append(menuBar, content);
