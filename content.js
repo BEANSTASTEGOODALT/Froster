@@ -674,7 +674,7 @@ function installSetQNumOverride() {
     }, intervalMs);
 }
 
-async function fetchAnswer() {
+async function fetchAnswer(grid = false) {
     try {
         uiLog('Attempting to fetch answer...');
 
@@ -690,7 +690,7 @@ async function fetchAnswer() {
         const questionObj = taskState.question;
 
         const payload = {
-            userAnswer: '1',
+            userAnswer: grid ? [{x: "0", y: "0"}] : '1',
             params: questionObj.params,
             ssid: questionObj.subskill ? questionObj.subskill.ssid : undefined,
             question: questionObj
@@ -712,6 +712,7 @@ async function fetchAnswer() {
 
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
+            if (response.status == 500) { fetchAnswer(true) };
         }
 
         const resultData = await response.json();
