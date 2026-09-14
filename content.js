@@ -15,6 +15,7 @@ const UI_IDS = {
 
 const logQueue = [];
 let lastAnswer = '';
+let wait = false;
 let lastAnswerRaw = null;
 const globalContext = typeof unsafeWindow !== 'undefined' ? unsafeWindow : window;
 
@@ -716,6 +717,9 @@ async function fetchAnswer(grid = false) {
                 fetchAnswer(true);
             };
             throw new Error(`HTTP error! status: ${response.status}`);
+            wait = true;
+        } else {
+            wait = false;
         }
 
         const resultData = await response.json();
@@ -950,6 +954,11 @@ function ensureGui() {
 
 async function showAnswerPopup() {
     await fetchAnswer();
+
+    if (wait) {
+        await fetchAnswer(true);
+    }
+
     const existing = document.querySelector('.frost-answer-popup');
     if (existing) existing.remove();
 
