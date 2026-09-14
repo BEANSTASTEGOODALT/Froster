@@ -712,7 +712,10 @@ async function fetchAnswer(grid = false) {
 
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
-            if (response.status == 500) { fetchAnswer(true) };
+            if (response.status == 500) {
+                uiLog("Failed, fetching with grid coords...");
+                fetchAnswer(true);
+            };
         }
 
         const resultData = await response.json();
