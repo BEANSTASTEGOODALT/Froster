@@ -815,7 +815,11 @@ async function submitAnswer() {
 
         if (!hasRawAnswer) {
             uiLog('No cached answer found. Fetching answer first...');
-            await fetchAnswer();
+            if (wait) {
+                await fetchAnswer(true);
+            } else {
+                await fetchAnswer();
+            }
         }
 
         const hasAnswerAfterFetch = lastAnswerRaw !== null && lastAnswerRaw !== undefined && !(typeof lastAnswerRaw === 'string' && lastAnswerRaw.trim() === '');
@@ -907,7 +911,11 @@ function bindGuiEvents() {
 
     if (btnFetch) btnFetch.addEventListener('click', async () => {
         try {
-            await fetchAnswer();
+            if (wait) {
+                await fetchAnswer(true);
+            } else {
+                await fetchAnswer();
+            }
         } catch (e) {
         }
     });
@@ -953,10 +961,10 @@ function ensureGui() {
 }
 
 async function showAnswerPopup() {
-    await fetchAnswer();
-
     if (wait) {
         await fetchAnswer(true);
+    } else {
+        await fetchAnswer();
     }
 
     const existing = document.querySelector('.frost-answer-popup');
@@ -1023,7 +1031,11 @@ onReady(async () => {
             document.querySelector("#froster-menu-close").click();
         }
         if (event.key == "'") {
-            fetchAnswer();
+            if (wait) {
+                fetchAnswer(true);
+            } else {
+                fetchAnswer();
+            }
             setTimeout(() => {
                 copyToClipboard();
             }, 500);
