@@ -393,46 +393,116 @@ function buildGui() {
     if (getEl(UI_IDS.root)) return;
     injectStyles();
 
-    const root = el('div', { id: UI_IDS.root });
+    const root = el('div', {
+        id: UI_IDS.root
+    });
 
-    const menuBar = el('div', { className: 'frost-menu-bar' });
-    const menu = el('ul', { className: 'frost-menu' });
+    const menuBar = el('div', {
+        className: 'frost-menu-bar'
+    });
+    const menu = el('ul', {
+        className: 'frost-menu'
+    });
 
-    const fileItem = el('li', { className: 'frost-menu-item', text: 'File' });
-    const fileSub = el('ul', { className: 'frost-submenu' });
-    const menuOpenConsole = el('li', { id: UI_IDS.menuOpenConsole, text: 'Open Console' });
-    const menuClose = el('li', { id: UI_IDS.menuClose, text: 'Minimize Panel' });
+    const fileItem = el('li', {
+        className: 'frost-menu-item',
+        text: 'File'
+    });
+    const fileSub = el('ul', {
+        className: 'frost-submenu'
+    });
+    const menuOpenConsole = el('li', {
+        id: UI_IDS.menuOpenConsole,
+        text: 'Open Console'
+    });
+    const menuClose = el('li', {
+        id: UI_IDS.menuClose,
+        text: 'Minimize Panel'
+    });
     fileSub.append(menuOpenConsole, menuClose);
     fileItem.appendChild(fileSub);
 
-    const helpItem = el('li', { className: 'frost-menu-item', text: 'Help' });
-    const helpSub = el('ul', { className: 'frost-submenu' });
-    const menuAbout = el('li', { id: UI_IDS.menuAbout, text: 'About' });
+    const helpItem = el('li', {
+        className: 'frost-menu-item',
+        text: 'Help'
+    });
+    const helpSub = el('ul', {
+        className: 'frost-submenu'
+    });
+    const menuAbout = el('li', {
+        id: UI_IDS.menuAbout,
+        text: 'About'
+    });
     helpSub.appendChild(menuAbout);
     helpItem.appendChild(helpSub);
 
     menu.append(fileItem, helpItem);
     menuBar.appendChild(menu);
 
-    const content = el('div', { className: 'frost-content' });
-    const title = el('h1', { className: 'frost-title', text: '❄️ Froster ❄️' });
+    const content = el('div', {
+        className: 'frost-content'
+    });
+    const title = el('h1', {
+        className: 'frost-title',
+        text: '❄️ Froster ❄️'
+    });
 
-    const controls = el('div', { className: 'frost-controls' });
-    const row = el('div', { className: 'frost-row' });
-    const btnFetch = el('button', { id: UI_IDS.btnFetch, className: 'frost-btn', text: 'Fetch Answer', title: 'Fetch Answer - ]' });
-    const btnSubmit = el('button', { id: UI_IDS.btnSubmit, className: 'frost-btn', text: 'Skip Question', title: 'Skip Question - ;' });
-    const btnComplete = el('button', { id: UI_IDS.btnComplete, className: 'frost-btn', text: 'Complete Task', title: 'Complete Task - ctrl + ;' });
-    const btnCopy = el('button', { id: UI_IDS.btnCopy, className: 'frost-btn', text: 'Copy Answer', title: 'Copy Answer - `' });
+    const controls = el('div', {
+        className: 'frost-controls'
+    });
+    const row = el('div', {
+        className: 'frost-row'
+    });
+    const btnFetch = el('button', {
+        id: UI_IDS.btnFetch,
+        className: 'frost-btn',
+        text: 'Fetch Answer',
+        title: 'Fetch Answer - ]'
+    });
+    const btnSubmit = el('button', {
+        id: UI_IDS.btnSubmit,
+        className: 'frost-btn',
+        text: 'Skip Question',
+        title: 'Skip Question - ;'
+    });
+    const btnComplete = el('button', {
+        id: UI_IDS.btnComplete,
+        className: 'frost-btn',
+        text: 'Complete Task',
+        title: 'Complete Task - ctrl + ;'
+    });
+    const btnCopy = el('button', {
+        id: UI_IDS.btnCopy,
+        className: 'frost-btn',
+        text: 'Copy Answer',
+        title: 'Copy Answer - `'
+    });
     row.append(btnFetch, btnSubmit, btnComplete, btnCopy);
 
-    const labelAnswer = el('div', { className: 'frost-label', text: 'Latest Answer:' });
-    const answer = el('div', { id: UI_IDS.answer, className: 'frost-answer', text: lastAnswer || '(no answer yet)' });
+    const labelAnswer = el('div', {
+        className: 'frost-label',
+        text: 'Latest Answer:'
+    });
+    const answer = el('div', {
+        id: UI_IDS.answer,
+        className: 'frost-answer',
+        text: lastAnswer || '(no answer yet)'
+    });
 
     controls.append(row, labelAnswer, answer);
 
-    const logWrap = el('div', { className: 'frost-log-wrap' });
-    const log = el('pre', { id: UI_IDS.log, className: 'frost-log' });
-    const btnClear = el('button', { id: UI_IDS.btnClear, className: 'frost-btn frost-btn-secondary', text: 'Clear Log'});
+    const logWrap = el('div', {
+        className: 'frost-log-wrap'
+    });
+    const log = el('pre', {
+        id: UI_IDS.log,
+        className: 'frost-log'
+    });
+    const btnClear = el('button', {
+        id: UI_IDS.btnClear,
+        className: 'frost-btn frost-btn-secondary',
+        text: 'Clear Log'
+    });
     logWrap.append(log, btnClear);
 
     content.append(title, controls, logWrap);
@@ -464,8 +534,7 @@ function makeGuiDraggable() {
                 applyRootPosition(root, pos.x, pos.y);
             }
         }
-    } catch (err) {
-    }
+    } catch (err) {}
 
     let dragging = false;
     let offsetX = 0;
@@ -493,12 +562,13 @@ function makeGuiDraggable() {
         document.removeEventListener('pointerup', onPointerUp);
         try {
             handle.releasePointerCapture(event.pointerId);
-        } catch (err) {
-        }
+        } catch (err) {}
         try {
-            localStorage.setItem(storageKey, JSON.stringify({ x: lastX, y: lastY }));
-        } catch (err) {
-        }
+            localStorage.setItem(storageKey, JSON.stringify({
+                x: lastX,
+                y: lastY
+            }));
+        } catch (err) {}
     };
 
     const onPointerDown = (event) => {
@@ -562,11 +632,11 @@ function formatAnswerText(raw) {
 }
 
 function normalizeArrayAnswer(value) {
-    const isAnswerWrapperObject = (candidate) => candidate
-        && typeof candidate === 'object'
-        && !Array.isArray(candidate)
-        && (Object.prototype.hasOwnProperty.call(candidate, 'main')
-            || Object.prototype.hasOwnProperty.call(candidate, 'exact'));
+    const isAnswerWrapperObject = (candidate) => candidate &&
+        typeof candidate === 'object' &&
+        !Array.isArray(candidate) &&
+        (Object.prototype.hasOwnProperty.call(candidate, 'main') ||
+            Object.prototype.hasOwnProperty.call(candidate, 'exact'));
 
     if (Array.isArray(value)) {
         if (value.length === 1 && isAnswerWrapperObject(value[0])) {
@@ -632,17 +702,19 @@ function overrideSetQNum() {
         var isFixedTask = !!state.task.wid;
         var hasSeenQuestion = !!state.attempt.answers[qnum];
 
-        const feedbackFn = globalContext.isFeedbackRequiredAndNotGiven
-            || (typeof isFeedbackRequiredAndNotGiven === 'function' ? isFeedbackRequiredAndNotGiven : null);
+        const feedbackFn = globalContext.isFeedbackRequiredAndNotGiven ||
+            (typeof isFeedbackRequiredAndNotGiven === 'function' ? isFeedbackRequiredAndNotGiven : null);
         if (typeof feedbackFn === 'function' && feedbackFn()) {
-            const alertFn = globalContext.dfmAlert
-                || (typeof dfmAlert === 'function' ? dfmAlert : null)
-                || alert;
+            const alertFn = globalContext.dfmAlert ||
+                (typeof dfmAlert === 'function' ? dfmAlert : null) ||
+                alert;
             alertFn('Your teacher has required that you give feedback on your answer.');
             return false;
         }
 
-        var toSend = { aaid: state.attempt.aaid };
+        var toSend = {
+            aaid: state.attempt.aaid
+        };
         if (qnum) toSend.qnum = qnum;
 
         if (typeof globalContext.getTaskQuestion === 'function') {
@@ -679,25 +751,23 @@ async function fetchAnswer(grid = false) {
     try {
         uiLog('Attempting to fetch answer...');
 
-        const jq = getJQuery();
-        const $taskState = jq ? jq(document).data('taskState') : null;
-        const taskState = $taskState || (window.taskState ? window.taskState : null);
-
-        if (!taskState || !taskState.question) {
+        const ctx = getTaskContext();
+        if (!ctx.taskState || !ctx.question) {
             uiLog('Task state or question not found. This must run on an active question page.');
             throw new Error('Task state missing');
         }
 
-        const questionObj = taskState.question;
-
         const payload = {
-            userAnswer: grid ? [{x: "0", y: "0"}] : '1',
-            params: questionObj.params,
-            ssid: questionObj.subskill ? questionObj.subskill.ssid : undefined,
-            question: questionObj
+            userAnswer: grid ? [{
+                x: "0",
+                y: "0"
+            }] : '1',
+            params: ctx.params,
+            ssid: ctx.ssid,
+            question: ctx.question
         };
 
-        uiLog('Sending preview request...');
+        uiLog(`Sending preview request${grid ? ' with grid coordinates' : ''}...`);
 
         const response = await fetch('https://www.drfrost.org/api/tasks/submitanswer', {
             method: 'POST',
@@ -712,21 +782,20 @@ async function fetchAnswer(grid = false) {
         });
 
         if (!response.ok) {
-            if (response.status == 500) {
-                uiLog("Failed, fetching with grid coords...");
-                fetchAnswer(true);
-            };
+            if (!grid && response.status === 500) {
+                uiLog('Preview failed, retrying with grid coordinates...');
+                wait = true;
+                return await fetchAnswer(true);
+            }
             throw new Error(`HTTP error! status: ${response.status}`);
-            wait = true;
-        } else {
-            wait = false;
         }
 
+        wait = grid;
         const resultData = await response.json();
         const correctAnswerObj = resultData?.question?.answer?.correctAnswer;
-        const rawAnswer = correctAnswerObj && Object.prototype.hasOwnProperty.call(correctAnswerObj, 'main')
-            ? correctAnswerObj.main
-            : correctAnswerObj;
+        const rawAnswer = correctAnswerObj && Object.prototype.hasOwnProperty.call(correctAnswerObj, 'main') ?
+            correctAnswerObj.main :
+            correctAnswerObj;
 
         lastAnswerRaw = rawAnswer;
         uiLog('Fetched answer:', rawAnswer);
@@ -809,9 +878,12 @@ async function waitForTaskState(timeout = 10000) {
 async function submitAnswer() {
     try {
         uiLog('Preparing submission...');
-        const ctx = getTaskContext();
 
-        const hasRawAnswer = lastAnswerRaw !== null && lastAnswerRaw !== undefined && !(typeof lastAnswerRaw === 'string' && lastAnswerRaw.trim() === '');
+        const answerEl = getEl(UI_IDS.answer);
+        const hasRawAnswer = lastAnswerRaw !== null &&
+            lastAnswerRaw !== undefined &&
+            !(typeof lastAnswerRaw === 'string' && lastAnswerRaw.trim() === '') &&
+            answerEl?.textContent !== '(no answer yet)';
 
         if (!hasRawAnswer) {
             uiLog('No cached answer found. Fetching answer first...');
@@ -822,6 +894,7 @@ async function submitAnswer() {
             }
         }
 
+        const ctx = getTaskContext();
         const hasAnswerAfterFetch = lastAnswerRaw !== null && lastAnswerRaw !== undefined && !(typeof lastAnswerRaw === 'string' && lastAnswerRaw.trim() === '');
         if (!hasAnswerAfterFetch) {
             uiLog('Unable to submit: no answer available.');
@@ -829,8 +902,8 @@ async function submitAnswer() {
         }
 
         const missing = [];
-        if (!ctx.aaid) missing.push('aaid');
-        if (!ctx.qnum) missing.push('qnum');
+        if (ctx.aaid === null || ctx.aaid === undefined) missing.push('aaid');
+        if (ctx.qnum === null || ctx.qnum === undefined) missing.push('qnum');
         if (!ctx.ssid) missing.push('ssid');
         if (!ctx.params) missing.push('params');
 
@@ -839,7 +912,7 @@ async function submitAnswer() {
             return null;
         }
 
-        const userAnswer = normalizeUserAnswer(lastAnswerRaw);
+        const userAnswer = normalizeUserAnswer(lastAnswerRaw ?? document.querySelector("#froster-answer").innerText);
         const payload = {
             userAnswer,
             qnum: ctx.qnum,
@@ -868,7 +941,10 @@ async function submitAnswer() {
         const resultData = await response.json();
         const isCorrect = resultData?.iscorrect;
         const points = resultData?.performanceupdate?.pointsearned;
-        uiLog('Submit response:', { iscorrect: isCorrect, pointsearned: points });
+        uiLog('Submit response:', {
+            iscorrect: isCorrect,
+            pointsearned: points
+        });
         return resultData;
     } catch (err) {
         uiLog('Submit failed:', err && err.message ? err.message : err);
@@ -916,13 +992,14 @@ function bindGuiEvents() {
             } else {
                 await fetchAnswer();
             }
-        } catch (e) {
+        } catch (err) {
+            uiLog('Fetch failed:', err?.message || err);
         }
     });
 
     if (btnSubmit) btnSubmit.addEventListener('click', async () => {
-        await submitAnswer();
-        location.reload();
+        const result = await submitAnswer();
+        if (result) location.reload();
     });
 
     if (btnComplete) btnComplete.addEventListener('click', async () => {
@@ -1026,19 +1103,17 @@ onReady(async () => {
     installSetQNumOverride();
     uiLog('GUI ready');
     document.querySelector("#froster-menu-close").click()
-    window.addEventListener("keydown", (event) => {
+    window.addEventListener("keydown", async (event) => {
         if (event.key == "[") {
             document.querySelector("#froster-menu-close").click();
         }
         if (event.key == "'") {
-            if (wait) {
-                fetchAnswer(true);
-            } else {
-                fetchAnswer();
+            try {
+                await fetchAnswer(wait);
+                await copyToClipboard();
+            } catch (err) {
+                uiLog("Copy answer failed:", err?.message || err);
             }
-            setTimeout(() => {
-                copyToClipboard();
-            }, 500);
         }
         if (event.key === "]") {
             let popup = document.querySelector('.frost-answer-popup');
@@ -1046,17 +1121,24 @@ onReady(async () => {
             if (popup) {
                 popup.remove();
             } else {
-                showAnswerPopup();
+                showAnswerPopup().catch((err) => {
+                    uiLog("Answer popup failed:", err?.message || err);
+                });
             }
         }
         if (event.key == ";") {
             if (event.ctrlKey) {
                 toggleCompleting();
             } else {
-                submitAnswer();
-                setTimeout(() => {
-                    location.reload();
-                }, 750);
+                submitAnswer().then((result) => {
+                    if (result) {
+                        setTimeout(() => {
+                            location.reload();
+                        }, 750);
+                    }
+                }).catch((err) => {
+                    uiLog("Skip question failed:", err?.message || err);
+                });
             }
         }
         if (event.key === "\\") {
@@ -1090,7 +1172,11 @@ onReady(async () => {
 
             uiLog("Auto-answer: question found");
 
-            await submitAnswer();
+            const result = await submitAnswer();
+            if (!result) {
+                uiLog("Auto-answer stopped: submission did not complete.");
+                return;
+            }
 
             const delay = Math.random() * 6000 + 4000;
             uiLog(`Auto-answer: next question in ${Math.round(delay)}ms`);
