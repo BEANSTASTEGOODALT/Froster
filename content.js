@@ -1,5 +1,5 @@
 (async () => {
-    const remoteURL = "https://raw.githubusercontent.com/BEANSTASTEGOODALT/Froster/refs/heads/main/content.js";
+    const remoteURL = "https://raw.githubusercontent.com/BEANSTASTEGOODALT/Froster/refs/heads/main/backup/content.js";
     const backupURL = "./backup/content.js";
 
     async function loadCode(url) {
