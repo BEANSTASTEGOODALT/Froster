@@ -10,6 +10,6 @@
 * Close files and go back to chrome://extensions
 * Click "Load unpacked"
 * Find where you saved Froster
-* Double click into it until there's no folders
+* Double click into it until you see "backup"
 * Click "Open"
 * Close the tab
