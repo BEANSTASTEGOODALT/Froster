@@ -796,9 +796,13 @@ async function fetchAnswer(grid = false) {
         let rawAnswer = correctAnswerObj && Object.prototype.hasOwnProperty.call(correctAnswerObj, 'main') ?
             correctAnswerObj.main :
             correctAnswerObj;
-        if (rawAnswer[0].from && rawAnswer[0].to) {
-            rawAnswer = (rawAnswer[0].from + rawAnswer[0].to)/2;
+        
+        try {
+            if (rawAnswer[0].from && rawAnswer[0].to) {
+                rawAnswer = (rawAnswer[0].from + rawAnswer[0].to)/2;
+            }
         }
+        catch(e){}
 
         lastAnswerRaw = rawAnswer;
         uiLog('Fetched answer:', rawAnswer);
