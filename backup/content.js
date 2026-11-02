@@ -794,7 +794,7 @@ async function fetchAnswer(grid = false) {
         const resultData = await response.json();
         const correctAnswerObj = resultData?.question?.answer?.correctAnswer;
         let rawAnswer = correctAnswerObj && Object.prototype.hasOwnProperty.call(correctAnswerObj, 'main') ?
-            correctAnswerObj.main :
+            correctAnswerObj.exponent ? correctAnswerObj : correctAnswerObj.main :
             correctAnswerObj;
         
         try {
