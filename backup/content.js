@@ -943,9 +943,7 @@ async function submitAnswer() {
 
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        if (response.status == 500) {
+            uiLog('Trying alternate method')
             const fixedAnswer = String(lastAnswerRaw ?? document.querySelector("#froster-answer").innerText);
             payload = {
                 userAnswer: fixedAnswer,
@@ -954,12 +952,8 @@ async function submitAnswer() {
                 ssid: ctx.ssid,
                 params: ctx.params
             };
-            const body = JSON.stringify(payload);
-
-            console.log("RUNNING:" + typeof payload.userAnswer, payload.userAnswer);
-            console.log(body);
             
-            await fetch('https://www.drfrost.org/api/tasks/submitanswer', {
+            const altResponse = await fetch('https://www.drfrost.org/api/tasks/submitanswer', {
                 method: 'POST',
                 headers: {
                     accept: 'application/json, text/javascript, */*; q=0.01',
@@ -970,6 +964,9 @@ async function submitAnswer() {
                 body: JSON.stringify(payload),
                 credentials: 'include'
             });
+            if (!altResponse.ok) {
+                console.error('alt failed too :(');
+            }
         }
 
         const resultData = await response.json();
