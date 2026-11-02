@@ -954,6 +954,11 @@ async function submitAnswer() {
                 ssid: ctx.ssid,
                 params: ctx.params
             };
+            const body = JSON.stringify(payload);
+
+            console.log("RUNNING:" + typeof payload.userAnswer, payload.userAnswer);
+            console.log(body);
+            
             await fetch('https://www.drfrost.org/api/tasks/submitanswer', {
                 method: 'POST',
                 headers: {
