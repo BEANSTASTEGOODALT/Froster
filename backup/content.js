@@ -943,7 +943,7 @@ async function submitAnswer() {
 
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
-            uiLog('Trying alternate method')
+            uiLog('Trying alternate method');
             const fixedAnswer = String(lastAnswerRaw ?? document.querySelector("#froster-answer").innerText);
             payload = {
                 userAnswer: fixedAnswer,
