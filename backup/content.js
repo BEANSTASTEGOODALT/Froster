@@ -920,14 +920,14 @@ async function submitAnswer() {
         }
 
         const userAnswer = normalizeUserAnswer(lastAnswerRaw ?? document.querySelector("#froster-answer").innerText);
-        const payload = {
+        let payload = {
             userAnswer,
             qnum: ctx.qnum,
             aaid: ctx.aaid,
             ssid: ctx.ssid,
             params: ctx.params
         };
-
+    
         uiLog('Submitting answer...');
         const response = await fetch('https://www.drfrost.org/api/tasks/submitanswer', {
             method: 'POST',
@@ -943,6 +943,27 @@ async function submitAnswer() {
 
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        if (response.status == 500) {
+            payload = {
+                String(userAnswer),
+                qnum: ctx.qnum,
+                aaid: ctx.aaid,
+                ssid: ctx.ssid,
+                params: ctx.params
+            };
+            await fetch('https://www.drfrost.org/api/tasks/submitanswer', {
+                method: 'POST',
+                headers: {
+                    accept: 'application/json, text/javascript, */*; q=0.01',
+                    'content-type': 'text/plain;charset=UTF-8',
+                    'x-requested-with': 'XMLHttpRequest'
+                },
+                referrer: ctx.referrer,
+                body: JSON.stringify(payload),
+                credentials: 'include'
+            });
         }
 
         const resultData = await response.json();
