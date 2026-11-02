@@ -941,42 +941,50 @@ async function submitAnswer() {
             credentials: 'include'
         });
 
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-            uiLog('Trying alternate method');
-            const fixedAnswer = String(lastAnswerRaw ?? document.querySelector("#froster-answer").innerText);
-            payload = {
-                userAnswer: fixedAnswer,
-                qnum: ctx.qnum,
-                aaid: ctx.aaid,
-                ssid: ctx.ssid,
-                params: ctx.params
-            };
-            
-            const altResponse = await fetch('https://www.drfrost.org/api/tasks/submitanswer', {
-                method: 'POST',
-                headers: {
-                    accept: 'application/json, text/javascript, */*; q=0.01',
-                    'content-type': 'text/plain;charset=UTF-8',
-                    'x-requested-with': 'XMLHttpRequest'
-                },
-                referrer: ctx.referrer,
-                body: JSON.stringify(payload),
-                credentials: 'include'
-            });
-            if (!altResponse.ok) {
-                console.error('alt failed too :(');
-            }
-        }
+let finalResponse = response;
 
-        const resultData = await response.json();
-        const isCorrect = resultData?.iscorrect;
-        const points = resultData?.performanceupdate?.pointsearned;
-        uiLog('Submit response:', {
-            iscorrect: isCorrect,
-            pointsearned: points
-        });
-        return resultData;
+if (!response.ok) {
+    uiLog('Trying alternate method...');
+
+    const fixedAnswer = String(
+        lastAnswerRaw ?? document.querySelector("#froster-answer").innerText
+    );
+
+    payload = {
+        userAnswer: fixedAnswer,
+        qnum: ctx.qnum,
+        aaid: ctx.aaid,
+        ssid: ctx.ssid,
+        params: ctx.params
+    };
+
+    finalResponse = await fetch('https://www.drfrost.org/api/tasks/submitanswer', {
+        method: 'POST',
+        headers: {
+            accept: 'application/json, text/javascript, */*; q=0.01',
+            'content-type': 'text/plain;charset=UTF-8',
+            'x-requested-with': 'XMLHttpRequest'
+        },
+        referrer: ctx.referrer,
+        body: JSON.stringify(payload),
+        credentials: 'include'
+    });
+
+    if (!finalResponse.ok) {
+        throw new Error(`Alternate fetch failed: HTTP ${finalResponse.status}`);
+    }
+}
+
+const resultData = await finalResponse.json();
+const isCorrect = resultData?.iscorrect;
+const points = resultData?.performanceupdate?.pointsearned;
+
+uiLog('Submit response:', {
+    iscorrect: isCorrect,
+    pointsearned: points
+});
+
+return resultData;
     } catch (err) {
         uiLog('Submit failed:', err && err.message ? err.message : err);
         return null;
