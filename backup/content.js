@@ -946,8 +946,9 @@ async function submitAnswer() {
         }
 
         if (response.status == 500) {
+            const fixedAnswer = String(lastAnswerRaw ?? document.querySelector("#froster-answer").innerText);
             payload = {
-                userAnswer: String(lastAnswerRaw ?? document.querySelector("#froster-answer").innerText),
+                userAnswer: fixedAnswer,
                 qnum: ctx.qnum,
                 aaid: ctx.aaid,
                 ssid: ctx.ssid,
