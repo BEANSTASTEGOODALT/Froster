@@ -947,7 +947,7 @@ async function submitAnswer() {
 
         if (response.status == 500) {
             payload = {
-                String(userAnswer),
+                normalizeUserAnswer(String(lastAnswerRaw ?? document.querySelector("#froster-answer").innerText)),
                 qnum: ctx.qnum,
                 aaid: ctx.aaid,
                 ssid: ctx.ssid,
