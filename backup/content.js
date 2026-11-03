@@ -1062,7 +1062,7 @@ function bindGuiEvents() {
                 "x-requested-with": "XMLHttpRequest"
               },
               "referrer": "https://www.drfrost.org/do-question.php?aaid=158290340",
-              "body": `{\"aaid\":${aaid},\"qnum\":${qnum}`,
+              "body": `{\"aaid\":${aaid},\"qnum\":${qnum + 1}`,
               "method": "POST",
               "mode": "cors",
               "credentials": "include"
