@@ -793,13 +793,14 @@ async function fetchAnswer(grid = false) {
         wait = grid;
         const resultData = await response.json();
         const correctAnswerObj = resultData?.question?.answer?.correctAnswer;
+        let rawAnswer;
         if (correctAnswerObj.power) {
             correctAnswerObj.power = String(correctAnswerObj.power);
             correctAnswerObj.main = String(correctAnswerObj.main);
-            let rawAnswer = correctAnswerObj;
+            rawAnswer = correctAnswerObj;
         }
         else {
-            let rawAnswer = correctAnswerObj && Object.prototype.hasOwnProperty.call(correctAnswerObj, 'main') ?
+            rawAnswer = correctAnswerObj && Object.prototype.hasOwnProperty.call(correctAnswerObj, 'main') ?
             correctAnswerObj.main :
             correctAnswerObj;
         }
