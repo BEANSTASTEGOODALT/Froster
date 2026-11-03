@@ -962,7 +962,12 @@ const fixedAnswer = lastAnswerRaw && typeof lastAnswerRaw === 'object' && Object
     : String(lastAnswerRaw ?? document.querySelector("#froster-answer").innerText);
     
    payload = {
-        fixedAnswer,
+    userAnswer: fixedAnswer,
+    qnum: ctx.qnum,
+    aaid: ctx.aaid,
+    ssid: ctx.ssid,
+    params: ctx.params
+};,
         qnum: ctx.qnum,
         aaid: ctx.aaid,
         ssid: ctx.ssid,
