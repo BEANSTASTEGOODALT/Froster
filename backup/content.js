@@ -6,6 +6,7 @@ const UI_IDS = {
     btnComplete: 'froster-btn-complete',
     btnCopy: 'froster-btn-copy',
     btnClear: 'froster-btn-clear',
+    btnUnlock: 'froster-btn-unlock',
     answer: 'froster-answer',
     log: 'froster-log',
     menuAbout: 'froster-menu-about',
@@ -476,6 +477,12 @@ function buildGui() {
         className: 'frost-btn',
         text: 'Copy Answer',
         title: 'Copy Answer - `'
+    });
+    const btnUnlock = el('button', {
+        id: UI_IDS.btnUnlock,
+        className: 'frost-btn',
+        text: 'Unlock All Questions',
+        title: 'Unlock All Questions'
     });
     row.append(btnFetch, btnSubmit, btnComplete, btnCopy);
 
@@ -1031,6 +1038,7 @@ function bindGuiEvents() {
     const btnComplete = getEl(UI_IDS.btnComplete);
     const btnCopy = getEl(UI_IDS.btnCopy);
     const btnClear = getEl(UI_IDS.btnClear);
+    const btnUnlock = getEl(UI_IDS.btnUnlock);
     const menuAbout = getEl(UI_IDS.menuAbout);
     const menuOpenConsole = getEl(UI_IDS.menuOpenConsole);
     const menuClose = getEl(UI_IDS.menuClose);
@@ -1045,6 +1053,25 @@ function bindGuiEvents() {
         } catch (err) {
             uiLog('Fetch failed:', err?.message || err);
         }
+    });
+
+    if (btnUnlock) btnUnlock.addEventListener('click', () => {
+        for (let i=0;i<39;i++){
+            fetch("https://www.drfrost.org/api/tasks/question/get", {
+              "headers": {
+                "accept": "*/*",
+                "accept-language": "en-US,en;q=0.9",
+                "content-type": "text/plain;charset=UTF-8",
+                "priority": "u=1, i",
+                "x-requested-with": "XMLHttpRequest"
+              },
+              "referrer": "https://www.drfrost.org/do-question.php?aaid=158290340",
+              "body": `{\"aaid\":158290340,\"qnum\":${i}}`,
+              "method": "POST",
+              "mode": "cors",
+              "credentials": "include"
+        })};
+        location.reload();
     });
 
     if (btnSubmit) btnSubmit.addEventListener('click', async () => {
