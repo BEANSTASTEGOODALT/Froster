@@ -795,7 +795,7 @@ async function fetchAnswer(grid = false) {
         const correctAnswerObj = resultData?.question?.answer?.correctAnswer;
         if (correctAnswerObj.power) {
             correctAnswerObj.power = String(correctAnswerObj.power);
-            correctAnswerOnj.main = String(correctAnswerObj.main);
+            correctAnswerObj.main = String(correctAnswerObj.main);
             let rawAnswer = correctAnswerObj;
         }
         else {
