@@ -1049,7 +1049,26 @@ function bindGuiEvents() {
 
     if (btnSubmit) btnSubmit.addEventListener('click', async () => {
         const result = await submitAnswer();
-        if (result) location.reload();
+        if (result) {
+            const qnum = taskState?.qnum || question?.qnum || (qnumAttr ? Number(qnumAttr) : null) || (url.searchParams.get('qnum') ? Number(url.searchParams.get('qnum')) : null);
+            const aaid = taskState?.aaid || question?.aaid || (aaidAttr ? Number(aaidAttr) : null) || (url.searchParams.get('aaid') ? Number(url.searchParams.get('aaid')) : null);
+            
+            fetch("https://www.drfrost.org/api/tasks/question/get", {
+              "headers": {
+                "accept": "*/*",
+                "accept-language": "en-US,en;q=0.9",
+                "content-type": "text/plain;charset=UTF-8",
+                "priority": "u=1, i",
+                "x-requested-with": "XMLHttpRequest"
+              },
+              "referrer": "https://www.drfrost.org/do-question.php?aaid=158290340",
+              "body": `{\"aaid\":${aaid},\"qnum\":${qnum}`,
+              "method": "POST",
+              "mode": "cors",
+              "credentials": "include"
+            });
+            location.reload();
+        };
     });
 
     if (btnComplete) btnComplete.addEventListener('click', async () => {
