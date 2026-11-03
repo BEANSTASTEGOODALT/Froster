@@ -929,7 +929,8 @@ async function submitAnswer() {
             return null;
         }
 
-        const userAnswer = normalizeUserAnswer(lastAnswerRaw ?? document.querySelector("#froster-answer").innerText);
+       const userAnswer = normalizeUserAnswer(lastAnswerRaw ?? document.querySelector("#froster-answer").innerText);
+        
         let payload = {
             userAnswer,
             qnum: ctx.qnum,
@@ -956,12 +957,12 @@ let finalResponse = response;
 if (!response.ok) {
     uiLog('Trying alternate method...');
 
-    const fixedAnswer = String(
-        lastAnswerRaw ?? document.querySelector("#froster-answer").innerText
-    );
-
-    payload = {
-        userAnswer: fixedAnswer,
+const fixedAnswer = lastAnswerRaw && typeof lastAnswerRaw === 'object' && Object.prototype.hasOwnProperty.call(lastAnswerRaw, 'power')
+    ? lastAnswerRaw
+    : String(lastAnswerRaw ?? document.querySelector("#froster-answer").innerText);
+    
+   payload = {
+        fixedAnswer,
         qnum: ctx.qnum,
         aaid: ctx.aaid,
         ssid: ctx.ssid,
