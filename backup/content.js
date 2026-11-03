@@ -957,17 +957,12 @@ let finalResponse = response;
 if (!response.ok) {
     uiLog('Trying alternate method...');
 
-const fixedAnswer = lastAnswerRaw && typeof lastAnswerRaw === 'object' && Object.prototype.hasOwnProperty.call(lastAnswerRaw, 'power')
-    ? lastAnswerRaw
-    : String(lastAnswerRaw ?? document.querySelector("#froster-answer").innerText);
+    const fixedAnswer = lastAnswerRaw && typeof lastAnswerRaw === 'object' && Object.prototype.hasOwnProperty.call(lastAnswerRaw, 'power')
+        ? lastAnswerRaw
+        : String(lastAnswerRaw ?? document.querySelector("#froster-answer").innerText);
     
-   payload = {
-    userAnswer: fixedAnswer,
-    qnum: ctx.qnum,
-    aaid: ctx.aaid,
-    ssid: ctx.ssid,
-    params: ctx.params
-};,
+    payload = {
+        userAnswer: fixedAnswer,
         qnum: ctx.qnum,
         aaid: ctx.aaid,
         ssid: ctx.ssid,
