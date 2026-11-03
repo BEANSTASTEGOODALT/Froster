@@ -794,7 +794,7 @@ async function fetchAnswer(grid = false) {
         const resultData = await response.json();
         const correctAnswerObj = resultData?.question?.answer?.correctAnswer;
         let rawAnswer;
-        if (correctAnswerObj.power) {
+        if (correctAnswerObj?.power) {
             correctAnswerObj.power = String(correctAnswerObj.power);
             correctAnswerObj.main = String(correctAnswerObj.main);
             rawAnswer = correctAnswerObj;
@@ -816,8 +816,10 @@ async function fetchAnswer(grid = false) {
         uiLog('Fetched answer:', rawAnswer);
         uiSetAnswer(formatAnswerText(rawAnswer));
         return rawAnswer;
-    } catch (err) {
-        uiLog('Fetch failed:', err && err.message ? err.message : err);
+    }
+    catch (err) {
+        console.error("FETCH ERROR:", err);
+        uiLog("Fetch failed:", err?.stack || String(err));
         throw err;
     }
 }
